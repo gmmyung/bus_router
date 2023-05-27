@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:bus_router/attributions.dart';
 import 'package:bus_router/bus.dart';
+import 'package:bus_router/bus_line_detail.dart';
 import 'package:bus_router/map.dart';
 import 'package:bus_router/searchscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 void main() {
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
+  // load bus info from assets/bus_info.json
   final String title;
 
   @override
@@ -37,7 +41,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _searchController = TextEditingController();
-  BusKind? focusBusKind;
+  BusRoute? focusBusRoute;
+  late final Future<BusInfo> busInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    busInfo = rootBundle
+        .loadString('assets/bus_info.json')
+        .then((value) => jsonDecode(value))
+        .then((value) => BusInfo.fromJson(value));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,112 +60,132 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Theme.of(context).colorScheme.inversePrimary,
           height: double.infinity,
           width: 200,
-          child: Text("WIP")),
+          child: const Text("WIP")),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Stack(
-        children: [
-          SizedBox(
-            child: Stack(
-              children: [
-                MainMap(
-                  mapController: MapController(),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                child: Hero(
-                  tag: "SearchBar",
-                  child: SearchBar(
-                      onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
-                          pageBuilder:
-                              (context, animation, secondartAnimation) =>
-                                  SearchScreen())),
-                      controller: _searchController,
-                      hintText: 'Search',
-                      trailing: const [Icon(Icons.search)]),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: FutureBuilder(
+          future: busInfo,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              final busInfo = snapshot.data!;
+              return Stack(
                 children: [
-                  for (final busKind in humphreysBusKind) ...[
-                    IconButton(
-                        padding: const EdgeInsets.all(8.0),
-                        onPressed: () => setState(() {
-                              if (focusBusKind == busKind) {
-                                focusBusKind = null;
-                              } else {
-                                focusBusKind = busKind;
-                              }
-                            }),
-                        icon: Icon(
-                          Icons.directions_bus,
-                          color: focusBusKind == null
-                              ? busKind.color
-                              : focusBusKind == busKind
-                                  ? busKind.color
-                                  : busKind.color.withOpacity(0.3),
-                        ))
-                  ]
-                ],
-              ),
-              const Expanded(child: SizedBox()),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: CircleAvatar(
-                    radius: 24,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.inversePrimary,
-                    child: IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.my_location)),
-                  ),
-                ),
-              ),
-              const Attribution(),
-            ],
-          ),
-          if (focusBusKind != null) ...[
-            DraggableScrollableSheet(
-              maxChildSize: 0.8,
-              builder: (context, scrollController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).dialogBackgroundColor,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
+                  SizedBox(
+                    child: Stack(
+                      children: [
+                        MainMap(
+                          mapController: MapController(),
+                        ),
+                      ],
                     ),
                   ),
-                  child: ListView(
-                    controller: scrollController,
-                    children: [
-                      if (focusBusKind != null) ...[
-                        Text(focusBusKind!.lineName)
-                      ]
-                    ],
+                  SafeArea(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Hero(
+                            tag: "SearchBar",
+                            child: SearchBar(
+                                onTap: () => Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          return FadeTransition(
+                                            opacity: animation,
+                                            child: child,
+                                          );
+                                        },
+                                        pageBuilder: (context, animation,
+                                                secondartAnimation) =>
+                                            const SearchScreen())),
+                                controller: _searchController,
+                                hintText: 'Search',
+                                trailing: const [Icon(Icons.search)]),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            for (final busRoute in busInfo.busRoutes) ...[
+                              IconButton(
+                                  padding: const EdgeInsets.all(8.0),
+                                  onPressed: () => setState(() {
+                                        if (focusBusRoute == null) {
+                                          focusBusRoute = busRoute;
+                                        } else if (focusBusRoute!.lineName ==
+                                            busRoute.lineName) {
+                                          focusBusRoute = null;
+                                        } else {
+                                          focusBusRoute = busRoute;
+                                        }
+                                      }),
+                                  icon: Icon(
+                                    Icons.directions_bus,
+                                    color: focusBusRoute == null
+                                        ? busRoute.color
+                                        : focusBusRoute == busRoute
+                                            ? busRoute.color
+                                            : busRoute.color.withOpacity(0.3),
+                                  ))
+                            ]
+                          ],
+                        ),
+                        const Expanded(child: SizedBox()),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: CircleAvatar(
+                              radius: 24,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                              child: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.my_location)),
+                            ),
+                          ),
+                        ),
+                        const Attribution(),
+                      ],
+                    ),
                   ),
-                );
-              },
-            )
-          ]
-        ],
-      ),
+                  if (focusBusRoute != null) ...[
+                    DraggableScrollableSheet(
+                      maxChildSize: 0.8,
+                      builder: (context, scrollController) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).dialogBackgroundColor,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                          ),
+                          child: ListView(
+                            controller: scrollController,
+                            children: [
+                              if (focusBusRoute != null) ...[
+                                BusLineDetail(
+                                  busRoute: focusBusRoute!,
+                                )
+                              ]
+                            ],
+                          ),
+                        );
+                      },
+                    )
+                  ]
+                ],
+              );
+            } else {
+              return const Center(child: Text("Error"));
+            }
+          }),
     );
   }
 }

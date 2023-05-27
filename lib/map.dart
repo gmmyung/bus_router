@@ -22,12 +22,7 @@ class _MainMapState extends State<MainMap> {
     return FlutterMap(
       mapController: widget.mapController,
       options: MapOptions(
-        onTap: widget.onTap != null
-            ? (tp, p) {
-                widget.onTap!(tp, p);
-                print("tapped!");
-              }
-            : (tp, p) {},
+        onTap: widget.onTap,
         maxZoom: 18,
         maxBounds: LatLngBounds(
           LatLng(36.9918227, 126.9685131),

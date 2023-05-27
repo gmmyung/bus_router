@@ -21,20 +21,22 @@ class _AttributionState extends State<Attribution> {
                 showDragHandle: true,
                 context: context,
                 builder: (context) {
-                  return const SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("© Mapbox"),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("© OpenStreetMap"),
-                        )
-                      ],
+                  return const SafeArea(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("© Mapbox"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("© OpenStreetMap"),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 });

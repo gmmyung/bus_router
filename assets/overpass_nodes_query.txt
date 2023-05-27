@@ -1,0 +1,4 @@
+[out:json][timeout:25];
+way["building"](36.9431782, 126.9685131, 36.9918227, 127.0538392);
+node(w);
+out body;

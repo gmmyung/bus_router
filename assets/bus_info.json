@@ -1,0 +1,281 @@
+{
+    "busRoutes" : [
+        {
+            "busNodes" : [
+                {
+                    "busStop" : "Example Stop 1",
+                    "arrivalTime" : 0
+                },
+                {
+                    "busStop" : "Example Stop 2",
+                    "arrivalTime" : 5
+                },
+                {
+                    "busStop" : "Example Stop 3",
+                    "arrivalTime" : 10
+                },
+                {
+                    "busStop" : "Example Stop 4",
+                    "arrivalTime" : 15
+                },
+                {
+                    "busStop" : "Example Stop 5",
+                    "arrivalTime" : 20
+                }
+            ],
+            "lineName" : "Example Line 1",
+            "color" : {
+                "a" : 255,
+                "r" : 200,
+                "g" : 0,
+                "b" : 0
+            },
+            "schedule" : [
+                {
+                    "weekday" : [1, 2, 3, 4, 5],
+                    "time" : [
+                        {
+                            "hour" : 8,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 8,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 9,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 9,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 10,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 10,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 11,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 11,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 12,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 12,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 13,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 13,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 14,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 14,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 15,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 15,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 16,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 16,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 17,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 17,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 18,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 18,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 19,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 19,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 20,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 20,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 21,
+                            "minute" : 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "busNodes" : [
+                {
+                    "busStop" : "Example Stop 1",
+                    "arrivalTime" : 0
+                },
+                {
+                    "busStop" : "Example Stop 2",
+                    "arrivalTime" : 5
+                },
+                {
+                    "busStop" : "Example Stop 3",
+                    "arrivalTime" : 10
+                },
+                {
+                    "busStop" : "Example Stop 4",
+                    "arrivalTime" : 15
+                },
+                {
+                    "busStop" : "Example Stop 5",
+                    "arrivalTime" : 20
+                }
+            ],
+            "lineName" : "Example Line 2",
+            "color" : {
+                "a" : 255,
+                "r" : 0,
+                "g" : 200,
+                "b" : 0
+            },
+            "schedule" : [
+                {
+                    "weekday" : [1, 2, 3, 4, 5],
+                    "time" : [
+                        {
+                            "hour" : 8,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 8,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 9,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 9,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 10,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 10,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 11,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 11,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 12,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 12,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 13,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 13,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 14,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 14,
+                            "minute" : 30
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "busStops" : [
+        {
+            "name" : "Example Stop 1",
+            "location" : {
+                "latitude" : 0.0,
+                "longitude" : 0.0
+            }
+        },
+        {
+            "name" : "Example Stop 2",
+            "location" : {
+                "latitude" : 0.0,
+                "longitude" : 0.0
+            }
+        },
+        {
+            "name" : "Example Stop 3",
+            "location" : {
+                "latitude" : 0.0,
+                "longitude" : 0.0
+            }
+        },
+        {
+            "name" : "Example Stop 4",
+            "location" : {
+                "latitude" : 0.0,
+                "longitude" : 0.0
+            }
+        },
+        {
+            "name" : "Example Stop 5",
+            "location" : {
+                "latitude" : 0.0,
+                "longitude" : 0.0
+            }
+        }
+    ]
+}
