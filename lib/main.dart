@@ -4,6 +4,7 @@ import 'package:bus_router/attributions.dart';
 import 'package:bus_router/bus.dart';
 import 'package:bus_router/bus_line_detail.dart';
 import 'package:bus_router/map.dart';
+import 'package:bus_router/overpass.dart';
 import 'package:bus_router/searchscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,9 +41,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _searchController = TextEditingController();
   BusRoute? focusBusRoute;
   late final Future<BusInfo> busInfo;
+  late final Future<BuildingQuery> buildingQuery;
+  late final Future<NodeQuery> nodeQuery;
 
   @override
   void initState() {
@@ -51,6 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
         .loadString('assets/bus_info.json')
         .then((value) => jsonDecode(value))
         .then((value) => BusInfo.fromJson(value));
+
+    buildingQuery = rootBundle
+        .loadString('assets/overpass_building.json')
+        .then((value) => jsonDecode(value))
+        .then((value) => BuildingQuery.fromJson(value));
+
+    nodeQuery = rootBundle
+        .loadString('assets/overpass_nodes.json')
+        .then((value) => jsonDecode(value))
+        .then((value) => NodeQuery.fromJson(value));
   }
 
   @override
@@ -66,126 +78,160 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: FutureBuilder(
-          future: busInfo,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasData) {
-              final busInfo = snapshot.data!;
-              return Stack(
+        future: Future.wait([busInfo, buildingQuery, nodeQuery]),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasData) {
+            final busInfo = snapshot.data![0] as BusInfo;
+            final buildingQuery = snapshot.data![1] as BuildingQuery;
+            final nodeQuery = snapshot.data![2] as NodeQuery;
+            return MainBody(
+              busInfo: busInfo,
+              buildingQuery: buildingQuery,
+              nodeQuery: nodeQuery,
+            );
+          } else {
+            return const Center(child: Text("Error"));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class MainBody extends StatefulWidget {
+  final BusInfo busInfo;
+  final BuildingQuery buildingQuery;
+  final NodeQuery nodeQuery;
+  const MainBody(
+      {super.key,
+      required this.busInfo,
+      required this.buildingQuery,
+      required this.nodeQuery});
+
+  @override
+  State<MainBody> createState() => _MainBodyState();
+}
+
+class _MainBodyState extends State<MainBody> {
+  BusRoute? focusBusRoute;
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizedBox(
+          child: Stack(
+            children: [
+              MainMap(
+                mapController: MapController(),
+              ),
+            ],
+          ),
+        ),
+        SafeArea(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: Hero(
+                  tag: "SearchBar",
+                  child: SearchBar(
+                      onTap: () => Navigator.of(context).push(PageRouteBuilder(
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          pageBuilder:
+                              (context, animation, secondartAnimation) =>
+                                  SearchScreen(
+                                    busInfo: widget.busInfo,
+                                    buildingQuery: widget.buildingQuery,
+                                    nodeQuery: widget.nodeQuery,
+                                  ))),
+                      hintText: 'Search',
+                      trailing: const [Icon(Icons.search)]),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    child: Stack(
-                      children: [
-                        MainMap(
-                          mapController: MapController(),
-                        ),
-                      ],
+                  for (final busRoute in widget.busInfo.busRoutes) ...[
+                    IconButton(
+                      padding: const EdgeInsets.all(8.0),
+                      onPressed: () => setState(
+                        () {
+                          if (focusBusRoute == null) {
+                            focusBusRoute = busRoute;
+                          } else if (focusBusRoute!.lineName ==
+                              busRoute.lineName) {
+                            focusBusRoute = null;
+                          } else {
+                            focusBusRoute = busRoute;
+                          }
+                        },
+                      ),
+                      icon: Icon(
+                        Icons.directions_bus,
+                        color: focusBusRoute == null
+                            ? busRoute.color
+                            : focusBusRoute == busRoute
+                                ? busRoute.color
+                                : busRoute.color.withOpacity(0.3),
+                      ),
                     ),
-                  ),
-                  SafeArea(
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Hero(
-                            tag: "SearchBar",
-                            child: SearchBar(
-                                onTap: () => Navigator.of(context).push(
-                                    PageRouteBuilder(
-                                        transitionsBuilder: (context, animation,
-                                            secondaryAnimation, child) {
-                                          return FadeTransition(
-                                            opacity: animation,
-                                            child: child,
-                                          );
-                                        },
-                                        pageBuilder: (context, animation,
-                                                secondartAnimation) =>
-                                            const SearchScreen())),
-                                controller: _searchController,
-                                hintText: 'Search',
-                                trailing: const [Icon(Icons.search)]),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (final busRoute in busInfo.busRoutes) ...[
-                              IconButton(
-                                  padding: const EdgeInsets.all(8.0),
-                                  onPressed: () => setState(() {
-                                        if (focusBusRoute == null) {
-                                          focusBusRoute = busRoute;
-                                        } else if (focusBusRoute!.lineName ==
-                                            busRoute.lineName) {
-                                          focusBusRoute = null;
-                                        } else {
-                                          focusBusRoute = busRoute;
-                                        }
-                                      }),
-                                  icon: Icon(
-                                    Icons.directions_bus,
-                                    color: focusBusRoute == null
-                                        ? busRoute.color
-                                        : focusBusRoute == busRoute
-                                            ? busRoute.color
-                                            : busRoute.color.withOpacity(0.3),
-                                  ))
-                            ]
-                          ],
-                        ),
-                        const Expanded(child: SizedBox()),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: CircleAvatar(
-                              radius: 24,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.my_location)),
-                            ),
-                          ),
-                        ),
-                        const Attribution(),
-                      ],
-                    ),
-                  ),
-                  if (focusBusRoute != null) ...[
-                    DraggableScrollableSheet(
-                      maxChildSize: 0.8,
-                      builder: (context, scrollController) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).dialogBackgroundColor,
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                          ),
-                          child: ListView(
-                            controller: scrollController,
-                            children: [
-                              if (focusBusRoute != null) ...[
-                                BusLineDetail(
-                                  busRoute: focusBusRoute!,
-                                )
-                              ]
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  ]
+                  ],
                 ],
+              ),
+              const Expanded(child: SizedBox()),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.inversePrimary,
+                    child: IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.my_location)),
+                  ),
+                ),
+              ),
+              const Attribution(),
+            ],
+          ),
+        ),
+        if (focusBusRoute != null) ...[
+          DraggableScrollableSheet(
+            maxChildSize: 0.8,
+            builder: (context, scrollController) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).dialogBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: ListView(
+                  controller: scrollController,
+                  children: [
+                    if (focusBusRoute != null) ...[
+                      BusLineDetail(
+                        busRoute: focusBusRoute!,
+                        busStops: widget.busInfo.busStops,
+                      )
+                    ],
+                  ],
+                ),
               );
-            } else {
-              return const Center(child: Text("Error"));
-            }
-          }),
+            },
+          ),
+        ],
+      ],
     );
   }
 }

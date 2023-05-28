@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 
 class BusLineDetail extends StatefulWidget {
   final BusRoute busRoute;
-  const BusLineDetail({super.key, required this.busRoute});
+  final List<BusStop> busStops;
+  const BusLineDetail({
+    super.key,
+    required this.busRoute,
+    required this.busStops,
+  });
 
   @override
   State<BusLineDetail> createState() => _BusLineDetailState();
@@ -36,6 +41,7 @@ class _BusLineDetailState extends State<BusLineDetail> {
           BusNodeWidget(
             busNode: widget.busRoute.busNodes[i],
             busRoute: widget.busRoute,
+            busStops: widget.busStops,
             index: i,
           ),
         ],
@@ -47,18 +53,21 @@ class _BusLineDetailState extends State<BusLineDetail> {
 class BusNodeWidget extends StatelessWidget {
   final BusNode busNode;
   final BusRoute busRoute;
+  final List<BusStop> busStops;
   final int index;
   final void Function()? onTap;
   const BusNodeWidget({
     super.key,
     required this.busNode,
     required this.busRoute,
+    required this.busStops,
     required this.index,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final busStop = fetchBusStop(busStops, busNode.busStop, busNode.direction)!;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -170,11 +179,30 @@ class BusNodeWidget extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(busNode.busStop),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    busNode.busStop,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    maxLines: 1,
+                  ),
+                  if (busStop.altName != null) ...[
+                    Text(
+                      busStop.altName!,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      maxLines: 1,
+                    ),
+                  ]
+                ],
+              ),
             ),
-            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("${busNode.arrivalTime.inMinutes} min"),

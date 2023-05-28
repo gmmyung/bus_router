@@ -9,13 +9,37 @@ part of 'overpass.dart';
 Building _$BuildingFromJson(Map<String, dynamic> json) => Building(
       json['id'] as int,
       (json['nodes'] as List<dynamic>).map((e) => e as int).toList(),
-      json['tags'] as Map<String, dynamic>,
+      Tags.fromJson(json['tags'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BuildingToJson(Building instance) => <String, dynamic>{
       'id': instance.id,
       'nodes': instance.nodes,
       'tags': instance.tags,
+    };
+
+Tags _$TagsFromJson(Map<String, dynamic> json) => Tags(
+      json['building'] as String?,
+      json['addr:housenumber'] as String?,
+      json['name'] as String?,
+      json['name:ko'] as String?,
+      json['addr:street'] as String?,
+      json['amenity'] as String?,
+      json['alt_name'] as String?,
+      json['short_name'] as String?,
+      json['official_name'] as String?,
+    );
+
+Map<String, dynamic> _$TagsToJson(Tags instance) => <String, dynamic>{
+      'building': instance.buildingType,
+      'addr:housenumber': instance.houseNumber,
+      'name': instance.name,
+      'name:ko': instance.nameKo,
+      'addr:street': instance.street,
+      'amenity': instance.amenity,
+      'alt_name': instance.altName,
+      'short_name': instance.shortName,
+      'official_name': instance.officialName,
     };
 
 BuildingQuery _$BuildingQueryFromJson(Map<String, dynamic> json) =>
@@ -42,7 +66,7 @@ Osm3s _$Osm3sFromJson(Map<String, dynamic> json) => Osm3s(
     );
 
 Map<String, dynamic> _$Osm3sToJson(Osm3s instance) => <String, dynamic>{
-      'timestamp_osm_base': instance.timestamp_osm_base,
+      'timestamp_osm_base': instance.timestampOsmBase,
       'copyright': instance.copyright,
     };
 

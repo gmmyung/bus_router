@@ -6,12 +6,21 @@ import "package:json_annotation/json_annotation.dart";
 
 part 'bus.g.dart';
 
+enum Direction {
+  @JsonValue("forward")
+  forward,
+  @JsonValue("reverse")
+  reverse,
+}
+
 @JsonSerializable()
 class BusStop {
   @LatLngConverter()
   final LatLng location;
   final String name;
-  const BusStop(this.location, this.name);
+  final String? altName;
+  final Direction? direction;
+  const BusStop(this.location, this.name, this.altName, this.direction);
   factory BusStop.fromJson(Map<String, dynamic> json) =>
       _$BusStopFromJson(json);
   Map<String, dynamic> toJson() => _$BusStopToJson(this);
@@ -34,9 +43,10 @@ class LatLngConverter implements JsonConverter<LatLng, Map<String, dynamic>> {
 @JsonSerializable()
 class BusNode {
   final String busStop;
+  final Direction? direction;
   @DurationConverter()
   final Duration arrivalTime;
-  const BusNode(this.busStop, this.arrivalTime);
+  const BusNode(this.busStop, this.arrivalTime, this.direction);
   factory BusNode.fromJson(Map<String, dynamic> json) =>
       _$BusNodeFromJson(json);
   Map<String, dynamic> toJson() => _$BusNodeToJson(this);
@@ -130,4 +140,15 @@ class BusInfo {
 Future<BusInfo> loadBusInfo(String string) async {
   print("Load bus info");
   return BusInfo.fromJson(jsonDecode(string));
+}
+
+// Fetch bus stop from list of bus stops
+BusStop? fetchBusStop(
+    List<BusStop> busStops, String name, Direction? direction) {
+  for (final busStop in busStops) {
+    if (busStop.name == name && busStop.direction == direction) {
+      return busStop;
+    }
+  }
+  return null;
 }

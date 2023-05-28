@@ -9,11 +9,46 @@ part 'overpass.g.dart';
 class Building {
   final int id;
   final List<int> nodes;
-  final Map<String, dynamic> tags;
+  final Tags tags;
   const Building(this.id, this.nodes, this.tags);
   factory Building.fromJson(Map<String, dynamic> json) =>
       _$BuildingFromJson(json);
   Map<String, dynamic> toJson() => _$BuildingToJson(this);
+}
+
+@JsonSerializable()
+class Tags {
+  @JsonKey(name: "building")
+  final String? buildingType;
+  @JsonKey(name: "addr:housenumber")
+  final String? houseNumber;
+  @JsonKey(name: "name")
+  final String? name;
+  @JsonKey(name: "name:ko")
+  final String? nameKo;
+  @JsonKey(name: "addr:street")
+  final String? street;
+  @JsonKey(name: "amenity")
+  final String? amenity;
+  @JsonKey(name: "alt_name")
+  final String? altName;
+  @JsonKey(name: "short_name")
+  final String? shortName;
+  @JsonKey(name: "official_name")
+  final String? officialName;
+  const Tags(
+    this.buildingType,
+    this.houseNumber,
+    this.name,
+    this.nameKo,
+    this.street,
+    this.amenity,
+    this.altName,
+    this.shortName,
+    this.officialName,
+  );
+  factory Tags.fromJson(Map<String, dynamic> json) => _$TagsFromJson(json);
+  Map<String, dynamic> toJson() => _$TagsToJson(this);
 }
 
 @JsonSerializable()
@@ -30,9 +65,10 @@ class BuildingQuery {
 
 @JsonSerializable()
 class Osm3s {
-  final String timestamp_osm_base;
+  @JsonKey(name: "timestamp_osm_base")
+  final String timestampOsmBase;
   final String copyright;
-  const Osm3s(this.timestamp_osm_base, this.copyright);
+  const Osm3s(this.timestampOsmBase, this.copyright);
   factory Osm3s.fromJson(Map<String, dynamic> json) => _$Osm3sFromJson(json);
   Map<String, dynamic> toJson() => _$Osm3sToJson(this);
 }

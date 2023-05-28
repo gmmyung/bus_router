@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:bus_router/bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,7 +12,7 @@ void main() {
     expect(busStop.name, "test");
   });
   test('BusNode', () {
-    final busNode = BusNode("test", const Duration());
+    const busNode = BusNode("test", Duration());
     expect(busNode, isNotNull);
     expect(busNode.busStop, "test");
     expect(busNode.arrivalTime, const Duration());

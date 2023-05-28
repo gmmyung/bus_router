@@ -3,178 +3,188 @@
         {
             "busNodes" : [
                 {
-                    "busStop" : "Example Stop 1",
+                    "busStop" : "Pedistrian Gate",
                     "arrivalTime" : 0
                 },
                 {
-                    "busStop" : "Example Stop 2",
+                    "busStop" : "Provider Grill DFAC",
+                    "direction" : "forward",
+                    "arrivalTime" : 3
+                },
+                {
+                    "busStop" : "SLQs",
+                    "direction" : "forward",
                     "arrivalTime" : 5
                 },
                 {
-                    "busStop" : "Example Stop 3",
-                    "arrivalTime" : 10
+                    "busStop" : "Eighth Army",
+                    "direction" : "forward",
+                    "arrivalTime" : 7
                 },
                 {
-                    "busStop" : "Example Stop 4",
+                    "busStop" : "Corps of Engineers",
+                    "direction" : "forward",
+                    "arrivalTime" : 9
+                },
+                {
+                    "busStop" : "TMP",
+                    "direction" : "forward",
+                    "arrivalTime" : 13
+                },
+                {
+                    "busStop" : "Airfield Operations",
+                    "direction" : "forward",
+                    "arrivalTime" : 14
+                },
+                {
+                    "busStop" : "Talon Cafe DFAC",
+                    "direction" : "forward",
                     "arrivalTime" : 15
                 },
                 {
-                    "busStop" : "Example Stop 5",
+                    "busStop" : "Barracks",
+                    "direction" : "forward",
+                    "arrivalTime" : 17
+                },
+                {
+                    "busStop" : "Pacific Victors Chapel",
+                    "direction" : "forward",
+                    "arrivalTime" : 19
+                },
+                {
+                    "busStop" : "Spartan DFAC",
+                    "direction" : "forward",
                     "arrivalTime" : 20
+                },
+                {
+                    "busStop" : "LTG Timothy J. Maude Hall",
+                    "direction" : "forward",
+                    "arrivalTime" : 22
+                },
+                {
+                    "busStop" : "Commissary",
+                    "direction" : "forward",
+                    "arrivalTime" : 24
+                },
+                {
+                    "busStop" : "Main Post Office",
+                    "direction" : "forward",
+                    "arrivalTime" : 25
+                },
+                {
+                    "busStop" : "Main Exchange",
+                    "direction" : "forward",
+                    "arrivalTime" : 27
+                },
+                {
+                    "busStop" : "Pittman DFAC",
+                    "direction" : "forward",
+                    "arrivalTime" : 29
+                },
+                {
+                    "busStop" : "Sitman Fitness Center",
+                    "direction" : "forward",
+                    "arrivalTime" : 31
+                },
+                {
+                    "busStop" : "2ID Sustainment",
+                    "arrivalTime" : 33
+                },
+                {
+                    "busStop" : "Central Issue Facility",
+                    "arrivalTime" : 34
+                },
+                {
+                    "busStop" : "Sitman Fitness Center",
+                    "direction" : "reverse",
+                    "arrivalTime" : 36
+                },
+                {
+                    "busStop" : "Pittman DFAC",
+                    "direction" : "reverse",
+                    "arrivalTime" : 38
+                },
+                {
+                    "busStop" : "Main Exchange",
+                    "direction" : "reverse",
+                    "arrivalTime" : 40
+                },
+                {
+                    "busStop" : "Main Post Office",
+                    "direction" : "reverse",
+                    "arrivalTime" : 41
+                },
+                {
+                    "busStop" : "Commissary",
+                    "direction" : "reverse",
+                    "arrivalTime" : 42
+                },
+                {
+                    "busStop" : "LTG Timothy J. Maude Hall",
+                    "direction" : "reverse",
+                    "arrivalTime" : 44
+                },
+                {
+                    "busStop" : "Spartan DFAC",
+                    "direction" : "reverse",
+                    "arrivalTime" : 46
+                },
+                {
+                    "busStop" : "Pacific Victors Chapel",
+                    "direction" : "reverse",
+                    "arrivalTime" : 48
+                },
+                {
+                    "busStop" : "Barracks",
+                    "direction" : "reverse",
+                    "arrivalTime" : 50
+                },
+                {
+                    "busStop" : "Talon Cafe DFAC",
+                    "direction" : "reverse",
+                    "arrivalTime" : 51
+                },
+                {
+                    "busStop" : "Airfield Operations",
+                    "direction" : "reverse",
+                    "arrivalTime" : 53
+                },
+                {
+                    "busStop" : "TMP",
+                    "direction" : "reverse",
+                    "arrivalTime" : 55
+                },
+                {
+                    "busStop" : "Corps of Engineers",
+                    "direction" : "reverse",
+                    "arrivalTime" : 58
+                },
+                {
+                    "busStop" : "Eighth Army",
+                    "direction" : "reverse",
+                    "arrivalTime" : 60
+                },
+                {
+                    "busStop" : "SLQs",
+                    "direction" : "reverse",
+                    "arrivalTime" : 62
+                },
+                {
+                    "busStop" : "Provider Grill DFAC",
+                    "direction" : "reverse",
+                    "arrivalTime" : 64
+                },
+                {
+                    "busStop" : "Pedistrian Gate",
+                    "arrivalTime" : 67
                 }
             ],
-            "lineName" : "Example Line 1",
-            "color" : {
-                "a" : 255,
-                "r" : 200,
-                "g" : 0,
-                "b" : 0
-            },
-            "schedule" : [
-                {
-                    "weekday" : [1, 2, 3, 4, 5],
-                    "time" : [
-                        {
-                            "hour" : 8,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 8,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 9,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 9,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 10,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 10,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 11,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 11,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 12,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 12,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 13,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 13,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 14,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 14,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 15,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 15,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 16,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 16,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 17,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 17,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 18,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 18,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 19,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 19,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 20,
-                            "minute" : 0
-                        },
-                        {
-                            "hour" : 20,
-                            "minute" : 30
-                        },
-                        {
-                            "hour" : 21,
-                            "minute" : 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "busNodes" : [
-                {
-                    "busStop" : "Example Stop 1",
-                    "arrivalTime" : 0
-                },
-                {
-                    "busStop" : "Example Stop 2",
-                    "arrivalTime" : 5
-                },
-                {
-                    "busStop" : "Example Stop 3",
-                    "arrivalTime" : 10
-                },
-                {
-                    "busStop" : "Example Stop 4",
-                    "arrivalTime" : 15
-                },
-                {
-                    "busStop" : "Example Stop 5",
-                    "arrivalTime" : 20
-                }
-            ],
-            "lineName" : "Example Line 2",
+            "lineName" : "Blue",
             "color" : {
                 "a" : 255,
                 "r" : 0,
-                "g" : 200,
-                "b" : 0
+                "g" : 0,
+                "b" : 200
             },
             "schedule" : [
                 {
@@ -186,7 +196,15 @@
                         },
                         {
                             "hour" : 8,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 8,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 8,
+                            "minute" : 45
                         },
                         {
                             "hour" : 9,
@@ -194,7 +212,15 @@
                         },
                         {
                             "hour" : 9,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 9,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 9,
+                            "minute" : 45
                         },
                         {
                             "hour" : 10,
@@ -202,7 +228,15 @@
                         },
                         {
                             "hour" : 10,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 10,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 10,
+                            "minute" : 45
                         },
                         {
                             "hour" : 11,
@@ -210,7 +244,15 @@
                         },
                         {
                             "hour" : 11,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 11,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 11,
+                            "minute" : 45
                         },
                         {
                             "hour" : 12,
@@ -218,7 +260,15 @@
                         },
                         {
                             "hour" : 12,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 12,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 12,
+                            "minute" : 45
                         },
                         {
                             "hour" : 13,
@@ -226,7 +276,15 @@
                         },
                         {
                             "hour" : 13,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 13,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 13,
+                            "minute" : 45
                         },
                         {
                             "hour" : 14,
@@ -234,7 +292,79 @@
                         },
                         {
                             "hour" : 14,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 14,
                             "minute" : 30
+                        },
+                        {
+                            "hour" : 14,
+                            "minute" : 45
+                        },
+                        {
+                            "hour" : 15,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 15,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 15,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 15,
+                            "minute" : 45
+                        },
+                        {
+                            "hour" : 16,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 16,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 16,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 16,
+                            "minute" : 45
+                        },
+                        {
+                            "hour" : 17,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 17,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 17,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 17,
+                            "minute" : 45
+                        },
+                        {
+                            "hour" : 18,
+                            "minute" : 0
+                        },
+                        {
+                            "hour" : 18,
+                            "minute" : 15
+                        },
+                        {
+                            "hour" : 18,
+                            "minute" : 30
+                        },
+                        {
+                            "hour" : 18,
+                            "minute" : 45
                         }
                     ]
                 }
@@ -243,38 +373,288 @@
     ],
     "busStops" : [
         {
-            "name" : "Example Stop 1",
+            "name" : "Pedistrian Gate",
+            "location" : {
+                "latitude" : 36.9587280,
+                "longitude" : 127.0425940
+            }
+        },
+        {
+            "name" : "Provider Grill DFAC",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Provider Grill DFAC",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "SLQs",
+            "altName" : "12200s Block",
+            "direction" : "forward",
             "location" : {
                 "latitude" : 0.0,
                 "longitude" : 0.0
             }
         },
         {
-            "name" : "Example Stop 2",
+            "name" : "SLQs",
+            "altName" : "12200s Block",
+            "direction" : "reverse",
             "location" : {
                 "latitude" : 0.0,
                 "longitude" : 0.0
             }
         },
         {
-            "name" : "Example Stop 3",
+            "name" : "Eighth Army",
+            "direction" : "forward",
             "location" : {
-                "latitude" : 0.0,
-                "longitude" : 0.0
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
             }
         },
         {
-            "name" : "Example Stop 4",
+            "name" : "Eighth Army",
+            "direction" : "reverse",
             "location" : {
-                "latitude" : 0.0,
-                "longitude" : 0.0
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
             }
         },
         {
-            "name" : "Example Stop 5",
+            "name" : "Corps of Engineers",
+            "direction" : "forward",
             "location" : {
-                "latitude" : 0.0,
-                "longitude" : 0.0
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Corps of Engineers",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "TMP",
+            "altName" : "Driver's Licensing",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "TMP",
+            "altName" : "Driver's Licensing",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Airfield Operations",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Airfield Operations",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Talon Cafe DFAC",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Talon Cafe DFAC",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Barracks",
+            "altName" : "6000s Block",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Barracks",
+            "altName" : "6000s Block",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Pacific Victors Chapel",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Pacific Victors Chapel",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9650000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Spartan DFAC",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Spartan DFAC",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "LTG Timothy J. Maude Hall",
+            "altName" : "9th Street",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "LTG Timothy J. Maude Hall",
+            "altName" : "9th Street",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Commissary",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Commissary",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Main Post Office",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Main Post Office",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9641628,
+                "longitude" : 127.0383260
+            }
+        },
+        {
+            "name" : "Main Exchange",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Main Exchange",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Pittman DFAC",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Pittman DFAC",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Sitman Fitness Center",
+            "direction" : "forward",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Sitman Fitness Center",
+            "direction" : "reverse",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "2ID Sustainment",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
+            }
+        },
+        {
+            "name" : "Central Issue Facility",
+            "location" : {
+                "latitude" : 36.9625000,
+                "longitude" : 127.0386110
             }
         }
     ]
