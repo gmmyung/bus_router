@@ -46,7 +46,9 @@ class BusNode {
   final Direction? direction;
   @DurationConverter()
   final Duration arrivalTime;
-  const BusNode(this.busStop, this.arrivalTime, this.direction);
+  @LatLngConverter()
+  final List<LatLng>? path;
+  const BusNode(this.busStop, this.arrivalTime, this.direction, this.path);
   factory BusNode.fromJson(Map<String, dynamic> json) =>
       _$BusNodeFromJson(json);
   Map<String, dynamic> toJson() => _$BusNodeToJson(this);
@@ -105,6 +107,16 @@ class BusRoute {
   factory BusRoute.fromJson(Map<String, dynamic> json) =>
       _$BusRouteFromJson(json);
   Map<String, dynamic> toJson() => _$BusRouteToJson(this);
+
+  List<LatLng> getPath() {
+    final List<LatLng> path = [];
+    for (final busNode in busNodes) {
+      if (busNode.path != null) {
+	path.addAll(busNode.path!);
+      }
+    }
+    return path;
+  }
 }
 
 class ColorConverter implements JsonConverter<Color, Map<String, dynamic>> {

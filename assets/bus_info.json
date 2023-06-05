@@ -4,8 +4,19 @@
             "busNodes" : [
                 {
                     "busStop" : "Pedistrian Gate",
-                    "arrivalTime" : 0
-                },
+                    "arrivalTime" : 0,
+		    "path" : [
+			    {
+			            "latitude" : 36.9583218,
+			            "longitude" : 127.0431921 
+			    },
+		            {
+				    "latitude" : 36.9585554,
+				    "longitude" : 127.0427120
+			    }
+		    ] 
+		    
+		},
                 {
                     "busStop" : "Provider Grill DFAC",
                     "direction" : "forward",
@@ -375,9 +386,9 @@
         {
             "name" : "Pedistrian Gate",
             "location" : {
-                "latitude" : 36.9587280,
-                "longitude" : 127.0425940
-            }
+                "latitude" : 36.9583218,
+                "longitude" :  127.0431921
+	    }
         },
         {
             "name" : "Provider Grill DFAC",

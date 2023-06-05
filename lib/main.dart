@@ -9,6 +9,7 @@ import 'package:bus_router/searchscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   BusRoute? focusBusRoute;
   late final Future<BusInfo> busInfo;
   late final Future<BuildingQuery> buildingQuery;
-  late final Future<NodeQuery> nodeQuery;
+  late final Future<Map<int, LatLng>> nodeMap;
 
   @override
   void initState() {
@@ -59,10 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((value) => jsonDecode(value))
         .then((value) => BuildingQuery.fromJson(value));
 
-    nodeQuery = rootBundle
+    nodeMap = rootBundle
         .loadString('assets/overpass_nodes.json')
-        .then((value) => jsonDecode(value))
-        .then((value) => NodeQuery.fromJson(value));
+        .then((value) => loadOverPassNodeMap(value)); 
   }
 
   @override
@@ -78,18 +78,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: FutureBuilder(
-        future: Future.wait([busInfo, buildingQuery, nodeQuery]),
+        future: Future.wait([busInfo, buildingQuery, nodeMap]),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
             final busInfo = snapshot.data![0] as BusInfo;
             final buildingQuery = snapshot.data![1] as BuildingQuery;
-            final nodeQuery = snapshot.data![2] as NodeQuery;
+            final nodeMap = snapshot.data![2] as Map<int, LatLng>;
             return MainBody(
               busInfo: busInfo,
               buildingQuery: buildingQuery,
-              nodeQuery: nodeQuery,
+              nodeMap: nodeMap,
             );
           } else {
             return const Center(child: Text("Error"));
@@ -103,12 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
 class MainBody extends StatefulWidget {
   final BusInfo busInfo;
   final BuildingQuery buildingQuery;
-  final NodeQuery nodeQuery;
+  final Map<int, LatLng> nodeMap;
   const MainBody(
       {super.key,
       required this.busInfo,
       required this.buildingQuery,
-      required this.nodeQuery});
+      required this.nodeMap});
 
   @override
   State<MainBody> createState() => _MainBodyState();
@@ -118,12 +118,24 @@ class _MainBodyState extends State<MainBody> {
   BusRoute? focusBusRoute;
   @override
   Widget build(BuildContext context) {
+    print(focusBusRoute?.getPath());
     return Stack(
       children: [
         SizedBox(
           child: Stack(
             children: [
               MainMap(
+	      	color: focusBusRoute?.color,
+		path: focusBusRoute?.getPath(),
+		busStops: focusBusRoute == null ? null : [
+		  for (final busNode in focusBusRoute!.busNodes) ...[
+		    fetchBusStop(
+		      widget.busInfo.busStops,
+		      busNode.busStop,
+		      busNode.direction
+		    )!
+		  ],
+		],
                 mapController: MapController(),
               ),
             ],
@@ -150,7 +162,7 @@ class _MainBodyState extends State<MainBody> {
                                   SearchScreen(
                                     busInfo: widget.busInfo,
                                     buildingQuery: widget.buildingQuery,
-                                    nodeQuery: widget.nodeQuery,
+                                    nodeMap: widget.nodeMap,
                                   ))),
                       hintText: 'Search',
                       trailing: const [Icon(Icons.search)]),

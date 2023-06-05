@@ -30,12 +30,17 @@ BusNode _$BusNodeFromJson(Map<String, dynamic> json) => BusNode(
       json['busStop'] as String,
       const DurationConverter().fromJson(json['arrivalTime'] as int),
       $enumDecodeNullable(_$DirectionEnumMap, json['direction']),
+      (json['path'] as List<dynamic>?)
+          ?.map((e) =>
+              const LatLngConverter().fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$BusNodeToJson(BusNode instance) => <String, dynamic>{
       'busStop': instance.busStop,
       'direction': _$DirectionEnumMap[instance.direction],
       'arrivalTime': const DurationConverter().toJson(instance.arrivalTime),
+      'path': instance.path?.map(const LatLngConverter().toJson).toList(),
     };
 
 Schedule _$ScheduleFromJson(Map<String, dynamic> json) => Schedule(

@@ -14,6 +14,18 @@ class Building {
   factory Building.fromJson(Map<String, dynamic> json) =>
       _$BuildingFromJson(json);
   Map<String, dynamic> toJson() => _$BuildingToJson(this);
+
+  LatLng getCenter(Map<int, LatLng> nodeMap ) {
+    double lat = 0;
+    double lon = 0;
+    for (final node in nodes) {
+      lat += nodeMap[node]!.latitude;
+      lon += nodeMap[node]!.longitude; 
+    }
+    lat /= nodes.length;
+    lon /= nodes.length;
+    return LatLng(lat, lon);
+  }
 }
 
 @JsonSerializable()
@@ -109,6 +121,15 @@ class NodeQuery {
   factory NodeQuery.fromJson(Map<String, dynamic> json) =>
       _$NodeQueryFromJson(json);
   Map<String, dynamic> toJson() => _$NodeQueryToJson(this);
+}
+
+Map<int, LatLng> loadOverPassNodeMap(String json) {
+  final nodeQuery = NodeQuery.fromJson(jsonDecode(json));
+  final nodeMap = <int, LatLng>{};
+  for (final node in nodeQuery.elements) {
+    nodeMap[node.id] = node.location;
+  }
+  return nodeMap;
 }
 
 Future<BuildingQuery> loadOverPassBuilding(String json) async {
