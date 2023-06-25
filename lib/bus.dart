@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import "package:json_annotation/json_annotation.dart";
+import 'datetime_extend.dart';
 
 part 'bus.g.dart';
+
 
 enum Direction {
   @JsonValue("forward")
@@ -42,13 +44,14 @@ class LatLngConverter implements JsonConverter<LatLng, Map<String, dynamic>> {
 
 @JsonSerializable()
 class BusNode {
-  final String busStop;
+  final String name;
   final Direction? direction;
   @DurationConverter()
   final Duration arrivalTime;
+  // First element of path SHOULD be the location of bus stop
   @LatLngConverter()
   final List<LatLng>? path;
-  const BusNode(this.busStop, this.arrivalTime, this.direction, this.path);
+  const BusNode(this.name, this.arrivalTime, this.direction, this.path);
   factory BusNode.fromJson(Map<String, dynamic> json) =>
       _$BusNodeFromJson(json);
   Map<String, dynamic> toJson() => _$BusNodeToJson(this);
@@ -68,9 +71,26 @@ class DurationConverter implements JsonConverter<Duration, int> {
   }
 }
 
+enum Weekday{
+  @JsonValue("mon")
+  mon,
+  @JsonValue("tue")
+  tue,
+  @JsonValue("wed")
+  wed,
+  @JsonValue("thu")
+  thu,
+  @JsonValue("fri")
+  fri,
+  @JsonValue("sat")
+  sat,
+  @JsonValue("sun")
+  sun,
+}
+
 @JsonSerializable()
 class Schedule {
-  final List<int> weekday;
+  final List<Weekday> weekday;
 
   @TimeOfDayConverter()
   final List<TimeOfDay> time;
@@ -116,6 +136,49 @@ class BusRoute {
       }
     }
     return path;
+  }
+
+  // return nearest bus stop from location
+  (String, double) findNearestBusStop(LatLng location) {
+    const Distance distance = Distance();
+    double minDistance = double.infinity;
+    String? nearestBusStop;
+    for (final busNode in busNodes) {
+      final double currentDistance =
+	  distance.as(LengthUnit.Kilometer, location, busNode.path!.first);
+      if (currentDistance < minDistance) {
+	minDistance = currentDistance;
+	nearestBusStop = busNode.name;
+      }
+    }
+    return (nearestBusStop!, minDistance);
+  }
+  
+  
+  DateTime? getDepartureTime(DateTime now, String busStop) {
+    final int weekday = now.weekday;
+    final TimeOfDay nowTime = TimeOfDay.fromDateTime(now);
+    for (final schedule in this.schedule) {
+      if (schedule.weekday.contains(weekday)) {
+        for (final laneStartTime in schedule.time) {
+	  final startingBusNode = busNodes.firstWhere((element) => element.name == busStop);
+	  if (laneStartTime + startingBusNode.arrivalTime > nowTime) {
+	    return DateTime(now.year, now.month, now.day, laneStartTime.hour, laneStartTime.minute);
+	  }
+	}
+      }
+    }
+    return null;
+  }
+
+  Duration? getDuration(String startBusStop, String endBusStop) {
+    final int startIndex = busNodes.indexWhere((element) => element.name == startBusStop);
+    final int endIndex = busNodes.indexWhere((element) => element.name == endBusStop);
+    if (startIndex == -1 || endIndex == -1) {
+      return null;
+    }
+    final Duration duration = busNodes[endIndex].arrivalTime - busNodes[startIndex].arrivalTime;
+    return duration;
   }
 }
 

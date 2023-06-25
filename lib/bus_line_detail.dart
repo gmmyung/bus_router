@@ -67,7 +67,7 @@ class BusNodeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final busStop = fetchBusStop(busStops, busNode.busStop, busNode.direction)!;
+    final busStop = fetchBusStop(busStops, busNode.name, busNode.direction)!;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -158,16 +158,16 @@ class BusNodeWidget extends StatelessWidget {
                           color: busRoute.color,
                         ),
                         Container(
-                          width: 8,
-                          height: 8,
+                          width: 12,
+                          height: 12,
                           decoration: BoxDecoration(
                             color: busRoute.color,
                             shape: BoxShape.circle,
                           ),
                         ),
                         Container(
-                          width: 4,
-                          height: 4,
+                          width: 6,
+                          height: 6,
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
@@ -180,27 +180,29 @@ class BusNodeWidget extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    busNode.busStop,
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
-                    maxLines: 1,
-                  ),
-                  if (busStop.altName != null) ...[
-                    Text(
-                      busStop.altName!,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                      overflow: TextOverflow.fade,
-                      softWrap: false,
-                      maxLines: 1,
-                    ),
-                  ]
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(busNode.name,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyLarge!),
+                    if (busStop.altName != null) ...[
+                      Text(
+                        busStop.altName!,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        maxLines: 1,
+                      ),
+                    ]
+                  ],
+                ),
               ),
             ),
             Padding(

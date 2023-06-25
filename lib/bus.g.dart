@@ -27,7 +27,7 @@ const _$DirectionEnumMap = {
 };
 
 BusNode _$BusNodeFromJson(Map<String, dynamic> json) => BusNode(
-      json['busStop'] as String,
+      json['name'] as String,
       const DurationConverter().fromJson(json['arrivalTime'] as int),
       $enumDecodeNullable(_$DirectionEnumMap, json['direction']),
       (json['path'] as List<dynamic>?)
@@ -37,14 +37,16 @@ BusNode _$BusNodeFromJson(Map<String, dynamic> json) => BusNode(
     );
 
 Map<String, dynamic> _$BusNodeToJson(BusNode instance) => <String, dynamic>{
-      'busStop': instance.busStop,
+      'name': instance.name,
       'direction': _$DirectionEnumMap[instance.direction],
       'arrivalTime': const DurationConverter().toJson(instance.arrivalTime),
       'path': instance.path?.map(const LatLngConverter().toJson).toList(),
     };
 
 Schedule _$ScheduleFromJson(Map<String, dynamic> json) => Schedule(
-      (json['weekday'] as List<dynamic>).map((e) => e as int).toList(),
+      (json['weekday'] as List<dynamic>)
+          .map((e) => $enumDecode(_$WeekdayEnumMap, e))
+          .toList(),
       (json['time'] as List<dynamic>)
           .map((e) =>
               const TimeOfDayConverter().fromJson(e as Map<String, dynamic>))
@@ -52,9 +54,19 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) => Schedule(
     );
 
 Map<String, dynamic> _$ScheduleToJson(Schedule instance) => <String, dynamic>{
-      'weekday': instance.weekday,
+      'weekday': instance.weekday.map((e) => _$WeekdayEnumMap[e]!).toList(),
       'time': instance.time.map(const TimeOfDayConverter().toJson).toList(),
     };
+
+const _$WeekdayEnumMap = {
+  Weekday.mon: 'mon',
+  Weekday.tue: 'tue',
+  Weekday.wed: 'wed',
+  Weekday.thu: 'thu',
+  Weekday.fri: 'fri',
+  Weekday.sat: 'sat',
+  Weekday.sun: 'sun',
+};
 
 BusRoute _$BusRouteFromJson(Map<String, dynamic> json) => BusRoute(
       (json['busNodes'] as List<dynamic>)

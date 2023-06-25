@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     busInfo = rootBundle
-        .loadString('assets/bus_info.json')
+        .loadString('assets/blue_test.json')
         .then((value) => jsonDecode(value))
         .then((value) => BusInfo.fromJson(value));
 
@@ -131,7 +131,7 @@ class _MainBodyState extends State<MainBody> {
 		  for (final busNode in focusBusRoute!.busNodes) ...[
 		    fetchBusStop(
 		      widget.busInfo.busStops,
-		      busNode.busStop,
+		      busNode.name,
 		      busNode.direction
 		    )!
 		  ],

@@ -47,13 +47,20 @@ class _SelectionMapState extends State<SelectionMap> {
             myMap,
           ],
         ),
-	const Center(
-	  child: Icon(
-	    Icons.location_pin,
-	    color: Colors.red,
-	    size: 40,
-	  )
-	)
+        const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.location_pin,
+                color: Colors.red,
+                size: 40,
+              ),
+              SizedBox(height: 40, width: 40),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -98,7 +105,16 @@ class _MainMapState extends State<MainMap> {
             polylines: [
               Polyline(
                 points: widget.path!,
-                color: widget.color!,
+                // color gets darker
+                gradientColors: [
+                  widget.color!,
+                  widget.color!.withOpacity(0.5),
+                  widget.color!,
+                  widget.color!.withOpacity(0.5),
+                  widget.color!
+                ],
+                colorsStop: [0.0, 0.25, 0.5, 0.75, 1.0],
+                //color: widget.color!,
                 strokeWidth: 10.0,
               )
             ],
@@ -109,16 +125,52 @@ class _MainMapState extends State<MainMap> {
             for (var busStop in widget.busStops!)
               Marker(
                 point: busStop.location,
-                height: 20,
-                width: 20,
+                width: 150,
+                height: 150,
                 builder: (context) {
                   return InkWell(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: widget.color!, width: 4),
-                      ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Row(
+			       mainAxisSize: MainAxisSize.min, 
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      busStop.name,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: widget.color!, width: 4),
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                      ],
                     ),
                     onTap: () {
                       print(busStop.name);

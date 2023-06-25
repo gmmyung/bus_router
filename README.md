@@ -1,16 +1,16 @@
-# bus_router
+# Bus Router 
 
-A new Flutter project.
+A Waze-like bus routing app for humphreys. WIP.
 
-## Getting Started
+## Features
+- Interactive view of bus routes on the map
+- Search destination based on overpass queries
+- Automatic bus routing just like Waze
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Todo
+- [ ] Mapping all bus route data
+- [x] Search destination using overpass query
+- [ ] Bus Routing (Single lane)
+- [ ] Bus Routing (Multiple lanes)
+- [ ] Offline map caching
+- [ ] Store favorite destinations

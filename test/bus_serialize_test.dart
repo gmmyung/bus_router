@@ -6,9 +6,9 @@ import 'package:latlong2/latlong.dart';
 
 void main() {
   test('BusStop', () {
-    final busStop = BusStop(LatLng(0, 0), "test");
+    const busStop = BusStop(LatLng(0, 0), "test");
     expect(busStop, isNotNull);
-    expect(busStop.location, LatLng(0, 0));
+    expect(busStop.location, const LatLng(0, 0));
     expect(busStop.name, "test");
   });
   test('BusNode', () {
@@ -46,7 +46,7 @@ void main() {
       "name": "test"
     });
     expect(busStop, isNotNull);
-    expect(busStop.location, LatLng(0.0, 0.0));
+    expect(busStop.location, const LatLng(0.0, 0.0));
     expect(busStop.name, "test");
   });
   test('BusNode.fromJson', () {
