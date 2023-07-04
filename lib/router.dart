@@ -28,10 +28,10 @@ class SingleBusRoute {
       this.busArrivalTime,
       this.arrivalTime);
 
-  SingleBusRoute? fromLocation(BusRoute busRoute, LatLng startLocation,
-      LatLng endLocation, DateTime currentTime) {
+  static SingleBusRoute? fromLocation({required BusRoute busRoute, required LatLng startLocation,
+      required LatLng endLocation, required DateTime currentTime}) {
     for (final schedule in busRoute.schedule) {
-      if (schedule.weekday.contains(currentTime.weekday)) {
+      if (schedule.weekday.contains(intToWeekday(currentTime.weekday))) {
         final (startStop, distanceToStartStop) =
             busRoute.findNearestBusStop(startLocation);
         final (endStop, distanceToEndStop) =
@@ -40,7 +40,10 @@ class SingleBusRoute {
         final walkingTimeToEndStop = getWalkingTime(distanceToEndStop);
         final busStopArrivalTime = currentTime.add(walkingTimeToStartStop);
         final busDepartureTime =
-            busRoute.getDepartureTime(busStopArrivalTime, startStop)!;
+            busRoute.getDepartureTime(busStopArrivalTime, startStop);
+	if (busDepartureTime == null) {
+	  return null;
+	}
         final busArrivalTime =
             busDepartureTime.add(busRoute.getDuration(startStop, endStop)!);
         final arrivalTime = busArrivalTime.add(walkingTimeToEndStop);

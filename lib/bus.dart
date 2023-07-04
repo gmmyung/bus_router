@@ -86,6 +86,28 @@ enum Weekday{
   sat,
   @JsonValue("sun")
   sun,
+
+}
+
+Weekday intToWeekday(int i){
+  switch(i){
+    case 1:
+      return Weekday.mon;
+    case 2:
+      return Weekday.tue;
+    case 3:
+      return Weekday.wed;
+    case 4:
+      return Weekday.thu;
+    case 5:
+      return Weekday.fri;
+    case 6:
+      return Weekday.sat;
+    case 7:
+      return Weekday.sun;
+    default:
+      throw Exception("Invalid weekday");
+  }
 }
 
 @JsonSerializable()

@@ -121,11 +121,11 @@ class _MainMapState extends State<MainMap> {
           )
         ],
         if (widget.busStops != null) ...[
-          MarkerLayer(markers: [
+          MarkerLayer(rotate: true, markers: [
             for (var busStop in widget.busStops!)
               Marker(
                 point: busStop.location,
-                width: 150,
+                width: 120,
                 height: 150,
                 builder: (context) {
                   return InkWell(
@@ -134,28 +134,31 @@ class _MainMapState extends State<MainMap> {
                         Expanded(
                           child: Column(
                             children: [
-                              const SizedBox(height: 20),
-                              Row(
-			       mainAxisSize: MainAxisSize.min, 
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(5),
-                                    height: 40,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      busStop.name,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
+                              const SizedBox(height: 40),
+                              Text(
+                                busStop.name,
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [
+                                      Shadow(
+                                          // bottomLeft
+                                          offset: Offset(-1.5, -1.5),
+                                          color: Colors.white),
+                                      Shadow(
+                                          // bottomRight
+                                          offset: Offset(1.5, -1.5),
+                                          color: Colors.white),
+                                      Shadow(
+                                          // topRight
+                                          offset: Offset(1.5, 1.5),
+                                          color: Colors.white),
+                                      Shadow(
+                                          // topLeft
+                                          offset: Offset(-1.5, 1.5),
+                                          color: Colors.white),
+                                    ]),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),

@@ -164,11 +164,12 @@ class BusStopSearchResult extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-	    builder: (context) => LocationPicker(
-              locationSelection: BusStopSelection(busStop: busStop),    
-	    ),
-	  ), 
-	);      
+            builder: (context) => LocationPicker(
+              busInfo: busInfo,
+              locationSelection: BusStopSelection(busStop: busStop),
+            ),
+          ),
+        );
       },
       title: Row(
         children: [
@@ -212,11 +213,13 @@ class BuildingSearchResult extends StatelessWidget {
     return ListTile(
       onTap: () {
         Navigator.of(context).push(
-	  MaterialPageRoute(
-	    builder: (context) => LocationPicker(
-	      locationSelection: BuildingSelection(building: building, nodeMap: nodeMap),
-	    ),
-	  ),
+          MaterialPageRoute(
+            builder: (context) => LocationPicker(
+              busInfo: busInfo,
+              locationSelection:
+                  BuildingSelection(building: building, nodeMap: nodeMap),
+            ),
+          ),
         );
       },
       title: Row(

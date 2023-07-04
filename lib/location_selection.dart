@@ -1,6 +1,7 @@
 import 'package:bus_router/bus.dart';
 import 'package:bus_router/map.dart';
 import 'package:bus_router/overpass.dart';
+import 'package:bus_router/route_result.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -69,7 +70,8 @@ class LatLngSelection extends LocationSelection {
 
 class LocationPicker extends StatefulWidget {
   final LocationSelection locationSelection;
-  const LocationPicker({super.key, required this.locationSelection});
+  final BusInfo busInfo;
+  const LocationPicker({super.key, required this.locationSelection ,required this.busInfo});
 
   @override
   State<LocationPicker> createState() => _LocationPickerState();
@@ -87,8 +89,30 @@ class _LocationPickerState extends State<LocationPicker> {
           },
         ),
       ),
-      body: SafeArea(
-        child: SelectionMap(locationSelection: widget.locationSelection),
+      body: Column(
+        children: [
+          Expanded(
+              child: SelectionMap(locationSelection: widget.locationSelection)),
+          SizedBox(
+            height: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  RouteResult(dest: widget.locationSelection, busInfo: widget.busInfo,),),);
+                    },
+                    style: FilledButton.styleFrom(
+                        minimumSize: const Size(350, 50)),
+                    child: const Text("Select")),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
